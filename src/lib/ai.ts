@@ -1,14 +1,19 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+let _openai: OpenAI | null = null;
+
+function getClient() {
+  if (!_openai) {
+    _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  }
+  return _openai;
+}
 
 export async function chat(
   messages: { role: "system" | "user" | "assistant"; content: string }[],
   options?: { temperature?: number; max_tokens?: number }
 ) {
-  const response = await openai.chat.completions.create({
+  const response = await getClient().chat.completions.create({
     model: "gpt-4o-mini",
     messages,
     temperature: options?.temperature ?? 0.7,
@@ -19,7 +24,7 @@ export async function chat(
 }
 
 export async function analyzeDocument(base64Content: string, prompt: string) {
-  const response = await openai.chat.completions.create({
+  const response = await getClient().chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
       {
