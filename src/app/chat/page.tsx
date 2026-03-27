@@ -2,8 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Sparkles, User, Loader2 } from "lucide-react";
-import Link from "next/link";
+import { Send, MessageSquare, User, Loader2 } from "lucide-react";
 import { Nav } from "@/components/nav";
 import { useLanguageStore } from "@/lib/language-store";
 
@@ -94,7 +93,7 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex h-screen flex-col bg-black text-white">
+    <div className="flex h-screen flex-col bg-gray-50 text-gray-900">
       <Nav />
 
       {/* Messages */}
@@ -106,13 +105,13 @@ export default function ChatPage() {
               animate={{ opacity: 1, y: 0 }}
               className="flex flex-col items-center pt-20"
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
-                <Sparkles className="h-7 w-7 text-blue-400" />
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-100">
+                <MessageSquare className="h-7 w-7 text-blue-500" />
               </div>
-              <h2 className="mt-6 text-2xl font-bold">
+              <h2 className="mt-6 text-2xl font-bold text-gray-900">
                 {lang === "en" ? "Ask me anything" : "무엇이든 물어보세요"}
               </h2>
-              <p className="mt-2 text-sm text-zinc-500">
+              <p className="mt-2 text-sm text-gray-500">
                 {lang === "en"
                   ? "About buying your first home in the U.S."
                   : "미국에서 첫 주택 구매에 대해"}
@@ -123,7 +122,7 @@ export default function ChatPage() {
                   <button
                     key={s}
                     onClick={() => sendMessage(s)}
-                    className="rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3 text-left text-sm text-zinc-400 transition-all hover:border-white/15 hover:bg-white/[0.05] hover:text-white"
+                    className="rounded-xl border border-gray-200 bg-white px-4 py-3 text-left text-sm text-gray-600 transition-all hover:border-blue-300 hover:shadow-sm hover:text-gray-900"
                   >
                     {s}
                   </button>
@@ -143,22 +142,22 @@ export default function ChatPage() {
                 }`}
               >
                 {msg.role === "assistant" && (
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
-                    <Sparkles className="h-4 w-4 text-blue-400" />
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-100">
+                    <MessageSquare className="h-4 w-4 text-blue-500" />
                   </div>
                 )}
                 <div
                   className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                     msg.role === "user"
-                      ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white"
-                      : "bg-white/5 text-zinc-300"
+                      ? "bg-blue-500 text-white"
+                      : "border border-gray-100 bg-white shadow-sm text-gray-700"
                   }`}
                 >
                   <div className="whitespace-pre-wrap">{msg.content}</div>
                 </div>
                 {msg.role === "user" && (
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-zinc-800">
-                    <User className="h-4 w-4 text-zinc-400" />
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gray-200">
+                    <User className="h-4 w-4 text-gray-600" />
                   </div>
                 )}
               </motion.div>
@@ -171,12 +170,12 @@ export default function ChatPage() {
               animate={{ opacity: 1 }}
               className="mb-6 flex gap-3"
             >
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
-                <Sparkles className="h-4 w-4 text-blue-400" />
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-100">
+                <MessageSquare className="h-4 w-4 text-blue-500" />
               </div>
-              <div className="flex items-center gap-2 rounded-2xl bg-white/5 px-4 py-3">
-                <Loader2 className="h-4 w-4 animate-spin text-blue-400" />
-                <span className="text-sm text-zinc-500">
+              <div className="flex items-center gap-2 rounded-2xl border border-gray-100 bg-white px-4 py-3 shadow-sm">
+                <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
+                <span className="text-sm text-gray-500">
                   {lang === "en" ? "Thinking..." : "생각 중..."}
                 </span>
               </div>
@@ -186,9 +185,9 @@ export default function ChatPage() {
       </div>
 
       {/* Input */}
-      <div className="border-t border-white/5 px-6 py-4">
+      <div className="border-t border-gray-100 bg-white px-6 py-4">
         <div className="mx-auto max-w-3xl">
-          <div className="flex items-end gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 transition-colors focus-within:border-blue-500/30">
+          <div className="flex items-end gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 transition-colors focus-within:border-blue-400 focus-within:shadow-sm">
             <textarea
               ref={inputRef}
               value={input}
@@ -196,17 +195,17 @@ export default function ChatPage() {
               onKeyDown={handleKeyDown}
               placeholder={lang === "en" ? "Ask about buying your first home..." : "첫 주택 구매에 대해 질문하세요..."}
               rows={1}
-              className="flex-1 resize-none bg-transparent text-sm text-white placeholder-zinc-600 outline-none"
+              className="flex-1 resize-none bg-transparent text-sm text-gray-900 placeholder-gray-400 outline-none"
             />
             <button
               onClick={() => sendMessage(input)}
               disabled={!input.trim() || loading}
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white transition-all hover:shadow-lg hover:shadow-blue-500/25 disabled:opacity-30"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-500 text-white transition-all hover:bg-blue-600 disabled:opacity-30"
             >
               <Send className="h-4 w-4" />
             </button>
           </div>
-          <p className="mt-2 text-center text-xs text-zinc-700">
+          <p className="mt-2 text-center text-xs text-gray-400">
             {lang === "en"
               ? "AI can make mistakes. Consult professionals for legal and financial advice."
               : "AI는 실수할 수 있습니다. 법률 및 재정 조언은 전문가와 상담하세요."}

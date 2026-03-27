@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import { ArrowRight, ArrowLeft, Globe } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLanguageStore } from "@/lib/language-store";
-import { Globe } from "lucide-react";
 
 interface QuizAnswer {
   location: string;
@@ -111,22 +110,22 @@ export default function QuizPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-black text-white">
+    <div className="flex min-h-screen flex-col bg-gray-50 text-gray-900">
       {/* Header */}
-      <div className="border-b border-white/5 px-6 py-4">
+      <div className="border-b border-gray-100 bg-white px-6 py-4">
         <div className="mx-auto flex max-w-2xl items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-zinc-400 transition hover:text-white">
-            <span className="text-sm font-medium">
-              FirstHome<span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">AI</span>
+          <Link href="/" className="flex items-center gap-2 text-gray-500 transition hover:text-gray-900">
+            <span className="text-sm font-semibold">
+              FirstHome<span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">AI</span>
             </span>
           </Link>
           <div className="flex items-center gap-3">
-            <span className="text-sm text-zinc-600">
+            <span className="text-sm text-gray-400">
               {step + 1} / {questions.length}
             </span>
             <button
               onClick={toggleLang}
-              className="flex items-center gap-1 rounded-full border border-white/10 px-2.5 py-1 text-xs text-zinc-500 transition hover:text-white"
+              className="flex items-center gap-1 rounded-full border border-gray-200 px-2.5 py-1 text-xs text-gray-500 transition hover:text-gray-900"
             >
               <Globe className="h-3 w-3" />
               {lang === "en" ? "한국어" : "EN"}
@@ -136,7 +135,7 @@ export default function QuizPage() {
       </div>
 
       {/* Progress bar */}
-      <div className="h-1 w-full bg-white/5">
+      <div className="h-1.5 w-full bg-gray-200">
         <motion.div
           className="h-full bg-gradient-to-r from-blue-500 to-cyan-400"
           animate={{ width: `${progress}%` }}
@@ -155,7 +154,7 @@ export default function QuizPage() {
             transition={{ duration: 0.3 }}
             className="w-full max-w-lg"
           >
-            <h2 className="text-2xl font-bold sm:text-3xl">
+            <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
               {lang === "en" ? current.question : current.questionKo}
             </h2>
 
@@ -171,12 +170,12 @@ export default function QuizPage() {
                     onClick={() => selectOption(option.value as string | boolean)}
                     className={`flex items-center gap-4 rounded-xl border px-5 py-4 text-left transition-all ${
                       isSelected
-                        ? "border-blue-500/50 bg-blue-500/10 text-white shadow-lg shadow-blue-500/10"
-                        : "border-white/5 bg-white/[0.02] text-zinc-300 hover:border-white/15 hover:bg-white/[0.05]"
+                        ? "border-blue-500 bg-blue-50 text-blue-700 shadow-md shadow-blue-100"
+                        : "border-gray-200 bg-white text-gray-700 hover:border-blue-300 hover:shadow-md"
                     }`}
                   >
                     <span className="text-xl">{option.emoji}</span>
-                    <span className="text-sm font-medium">
+                    <span className={`text-sm font-medium ${isSelected ? "text-blue-700" : "text-gray-700"}`}>
                       {lang === "en" ? option.label : option.labelKo}
                     </span>
                   </motion.button>
@@ -187,15 +186,15 @@ export default function QuizPage() {
         </AnimatePresence>
       </div>
 
-      {/* Back button */}
-      <div className="border-t border-white/5 px-6 py-4">
+      {/* Back / Skip buttons */}
+      <div className="border-t border-gray-100 bg-white px-6 py-4">
         <div className="mx-auto flex max-w-lg justify-between">
           <button
             onClick={() => step > 0 && setStep(step - 1)}
             className={`flex items-center gap-2 text-sm transition ${
               step > 0
-                ? "text-zinc-400 hover:text-white"
-                : "pointer-events-none text-zinc-700"
+                ? "text-gray-400 hover:text-gray-900"
+                : "pointer-events-none text-gray-200"
             }`}
           >
             <ArrowLeft className="h-4 w-4" />
@@ -208,7 +207,7 @@ export default function QuizPage() {
               step < questions.length - 1 &&
               setStep(step + 1)
             }
-            className="flex items-center gap-2 text-sm text-zinc-400 transition hover:text-white"
+            className="flex items-center gap-2 text-sm text-gray-400 transition hover:text-gray-900"
           >
             {lang === "en" ? "Skip" : "건너뛰기"}
             <ArrowRight className="h-4 w-4" />
